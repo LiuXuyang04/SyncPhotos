@@ -1,0 +1,12 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.syncphotos.mapper.FileExifMapper">
+    <resultMap id="fileExifMap" type="cn.syncphotos.entity.FileExif">
+        <id property="fileId" column="file_id"/>
+        <result property="duration" column="duration"/>
+        <result property="latitude" column="latitude"/>
+        <result property="longitude" column="longitude"/>
+        <result property="camera" column="camera"/>
+        <result property="resolution" column="resolution"/>
+        <result property="duration" column="duration"/>
+    </resultMap>
+</mapper>

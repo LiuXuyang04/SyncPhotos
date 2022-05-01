@@ -53,8 +53,21 @@ public class FileExifServiceImpl extends ServiceImpl<FileExifMapper, FileExif> i
     }
 
     @Override
+    @SneakyThrows
     public FileExif getVideoMetaData(InputStream stream) {
-        return null;
+        Map<String, String> tagList = new HashMap<>();
+        Metadata metadata = ImageMetadataReader.readMetadata(stream);
+        metadata.getDirectories().forEach(directory -> {
+            directory.getTags().forEach(tag -> {
+                tagList.put(tag.getTagName(), tag.getDescription());
+            });
+        });
+        FileExif fileExif = new FileExif();
+        fileExif.setCamera(tagList.get("Model") != null ? tagList.get("Model") : tagList.get("Software"));
+        fileExif.setResolution(trimGPSStr(tagList.get("Width")) + "x" + trimGPSStr(tagList.get("Height")));
+        fileExif.setOriginTime(DateUtil.date());
+        fileExif.setDuration(tagList.get("Duration in Seconds"));
+        return fileExif;
     }
 
     /**

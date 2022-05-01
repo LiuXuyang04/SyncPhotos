@@ -21,6 +21,8 @@ import java.util.Map;
 
 @SpringBootTest
 class SyncPhotosApplicationTests {
+
+
     @Test
     void test() throws FileNotFoundException {
         String path2 = "/Users/liuxuyang/Movies/Wondershare UniConverter13/Recorded/凤凰卫视元宇宙.mp4";

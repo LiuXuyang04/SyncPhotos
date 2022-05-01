@@ -41,13 +41,17 @@ public class SysFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> impl
         String path = StrFormatter.format(CommonConstants.FILEPATH, sysFile.getId(), suffix);
         FileWriter writer = new FileWriter(path);
         writer.writeFromStream(file.getInputStream());
+        FileExif imageMetaData = null;
         if (sysFile.getFileType().equals("0")) {
-            FileExif imageMetaData = fileExifService.getImageMetaData(file.getInputStream());
+            //图片解析方法
+            imageMetaData = fileExifService.getImageMetaData(file.getInputStream());
             imageMetaData.setFileId(sysFile.getId());
-            fileExifService.save(imageMetaData);
         } else {
-            //Todo 视频解析方法
+            //视频解析方法
+            imageMetaData = fileExifService.getVideoMetaData(file.getInputStream());
+            imageMetaData.setFileId(sysFile.getId());
         }
+        fileExifService.save(imageMetaData);
         return true;
     }
 
